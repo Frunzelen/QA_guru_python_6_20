@@ -4,11 +4,10 @@ from conftest import load_json_schema
 
 
 def test_successful_update_user_():
-    response = requests.patch(
-        'https://reqres.in/api/users/2',
-        {"name": "Elena",
-         "job": "QA Automation Engineer"}
-    )
+    data = {"name": "Elena",
+            "job": "QA Automation Engineer"}
+
+    response = requests.patch('https://reqres.in/api/users/2', data=data)
 
     assert response.status_code == 200
     assert response.json()['name'] == "Elena"
@@ -17,11 +16,10 @@ def test_successful_update_user_():
 
 def test_update_user_schema_response_format():
     schema = load_json_schema('patch_update_user_schema_response.json')
+    data = {"name": "Elena",
+            "job": "QA Automation Engineer"}
 
-    response = requests.patch(
-        'https://reqres.in/api/users/2',
-        {"name": "Elena",
-         "job": "QA Automation Engineer"})
+    response = requests.patch('https://reqres.in/api/users/2', data=data)
 
     validate(instance=response.json(),
              schema=schema)
